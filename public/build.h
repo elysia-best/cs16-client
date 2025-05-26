@@ -100,14 +100,14 @@ Then you can use another oneliner to query all variables:
 	#define XASH_DOS4GW 1
 #else // POSIX compatible
 	#define XASH_POSIX 1
-	#if defined __linux__
+	#if defined(__linux__)
 		#if defined __ANDROID__
 			#define XASH_ANDROID 1
 		#else
 			#include <features.h>
 			// if our system libc has features.h header
 			// try to detect it to not confuse other libcs with built with glibc game libraries
-			#if !defined __GLIBC__
+			#if !defined(__GLIBC__)
 				#define XASH_LINUX_UNKNOWN 1
 			#endif
 		#endif
@@ -155,10 +155,10 @@ Then you can use another oneliner to query all variables:
 //================================================================
 
 #if !defined XASH_ENDIANNESS
-	#if defined XASH_WIN32 || __LITTLE_ENDIAN__
+	#if defined(XASH_WIN32) || defined(__LITTLE_ENDIAN__)
 		//!!! Probably all WinNT installations runs in little endian
 		#define XASH_LITTLE_ENDIAN 1
-	#elif __BIG_ENDIAN__
+	#elif defined(__BIG_ENDIAN__)
 		#define XASH_BIG_ENDIAN 1
 	#elif defined __BYTE_ORDER__ && defined __ORDER_BIG_ENDIAN__ && defined __ORDER_LITTLE_ENDIAN__ // some compilers define this
 		#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
@@ -189,6 +189,8 @@ Then you can use another oneliner to query all variables:
 #elif defined __aarch64__ || defined _M_ARM64
 	#define XASH_64BIT 1
 	#define XASH_ARM   8
+#elif defined(__loongarch64)
+        #define XASH_64BIT 1
 #elif defined __mips__
 	#define XASH_MIPS 1
 #elif defined __EMSCRIPTEN__
