@@ -28,8 +28,9 @@ jobs:
         run: |
           DOCKER_IMAGE="ghcr.io/loong64/debian:trixie"
           DOCKER_CMD=`cat << EOF
+            set -e
             apt update
-            apt install build-essential cmake ninja-build libfontconfig-dev
+            apt install -y build-essential cmake ninja-build libfontconfig-dev
             mkdir build
             cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
             cd build
@@ -43,7 +44,7 @@ jobs:
             --volume "$(pwd):/io" \
             --workdir /io \
             "$DOCKER_IMAGE" \
-            sh -c "$DOCKER_CMD"
+            bash -c "$DOCKER_CMD"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
