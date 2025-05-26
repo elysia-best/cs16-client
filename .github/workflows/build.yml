@@ -34,11 +34,12 @@ jobs:
             mkdir build
             cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
             cd build
-            cmake --build .
+            cmake --build . --parallel $(nproc)
             cpack --config CPackConfig.cmake
           EOF
           `
           docker run --rm \
+            --cpus=`nproc` \
             --platform linux/loong64 \
             --volume /tmp/.cache:/root/.cache \
             --volume "$(pwd):/io" \
