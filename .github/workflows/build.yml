@@ -29,7 +29,7 @@ jobs:
           DOCKER_IMAGE="ghcr.io/loong64/debian:trixie"
           DOCKER_CMD=`cat << EOF
             apt update
-            apt install build-essentials cmake ninja-build libfontconfig-dev
+            apt install build-essential cmake ninja-build libfontconfig-dev
             mkdir build
             cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
             cd build
