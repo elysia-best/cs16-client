@@ -47,7 +47,7 @@ jobs:
             export CPP="ccache cpp"
             export CXX="ccache g++"
             mkdir build
-            cmake -S . -B build -G "Unix Makefiles" -DCMAKE_CXX_COMPILER="ccache gcc" -CMAKE_CXX_COMPILER="ccache g++" -DCMAKE_BUILD_TYPE=Release
+            cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release
             cd build
             cmake --build . --parallel $(nproc)
             cpack --config CPackConfig.cmake
