@@ -38,6 +38,7 @@ jobs:
             set -e
             apt update
             apt install -y build-essential cmake ninja-build libfontconfig-dev sudo git ccache
+            
             export USE_CCACHE=1
             export CCACHE_SLOPPINESS=file_macro,include_file_mtime,time_macros
             export CCACHE_UMASK=002
@@ -46,6 +47,8 @@ jobs:
             export CC="ccache gcc"
             export CPP="ccache cpp"
             export CXX="ccache g++"
+
+            git config --global --add safe.directory /io/3rdparty/ReGameDLL_CS
             mkdir build
             cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release
             cd build
