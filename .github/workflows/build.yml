@@ -17,6 +17,13 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
+
+      - name: Setup Cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.cache
+          key: ${{ matrix.container }}-${{ matrix.type }}-${{ github.sha }}
+          restore-keys: ${{ matrix.container }}-${{ matrix.type }}-
           
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v3
@@ -30,9 +37,17 @@ jobs:
           DOCKER_CMD=`cat << EOF
             set -e
             apt update
-            apt install -y build-essential cmake ninja-build libfontconfig-dev
+            apt install -y build-essential cmake ninja-build libfontconfig-dev sudo git ccache
+            export USE_CCACHE=1
+            export CCACHE_SLOPPINESS=file_macro,include_file_mtime,time_macros
+            export CCACHE_UMASK=002
+            export CCACHE_DIR=/root/.cache
+            ccache -M 50G
+            export CC="ccache gcc"
+            export CPP="ccache cpp"
+            export CXX="ccache g++"
             mkdir build
-            cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+            cmake -S . -B build -G "Unix Makefiles" -DCMAKE_CXX_COMPILER="ccache gcc" -CMAKE_CXX_COMPILER="ccache g++" -DCMAKE_BUILD_TYPE=Release
             cd build
             cmake --build . --parallel $(nproc)
             cpack --config CPackConfig.cmake
