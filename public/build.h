@@ -92,16 +92,16 @@ Then you can use another oneliner to query all variables:
 //           PLATFORM DETECTION CODE
 //
 //================================================================
-#if defined _WIN32
+#if defined(_WIN32)
 	#define XASH_WIN32 1
-#elif defined __EMSCRIPTEN__
+#elif defined(__EMSCRIPTEN__)
 	#define XASH_EMSCRIPTEN 1
-#elif defined __WATCOMC__ && defined __DOS__
+#elif defined(__WATCOMC__) && defined(__DOS__)
 	#define XASH_DOS4GW 1
 #else // POSIX compatible
 	#define XASH_POSIX 1
 	#if defined(__linux__)
-		#if defined __ANDROID__
+		#if defined(__ANDROID__)
 			#define XASH_ANDROID 1
 		#else
 			#include <features.h>
@@ -112,27 +112,27 @@ Then you can use another oneliner to query all variables:
 			#endif
 		#endif
 		#define XASH_LINUX 1
-	#elif defined __FreeBSD__
+	#elif defined(__FreeBSD__)
 		#define XASH_FREEBSD 1
-	#elif defined __NetBSD__
+	#elif defined(__NetBSD__)
 		#define XASH_NETBSD 1
-	#elif defined __OpenBSD__
+	#elif defined(__OpenBSD__)
 		#define XASH_OPENBSD 1
-	#elif defined __HAIKU__
+	#elif defined(__HAIKU__)
 		#define XASH_HAIKU 1
-	#elif defined __serenity__
+	#elif defined(__serenity__)
 		#define XASH_SERENITY 1
-	#elif defined __sgi
+	#elif defined(__sgi)
 		#define XASH_IRIX 1
-	#elif defined __APPLE__
+	#elif defined(__APPLE__)
 		#include <TargetConditionals.h>
 		#define XASH_APPLE 1
 		#if TARGET_OS_IOS
 			#define XASH_IOS 1
 		#endif // TARGET_OS_IOS
-	#elif defined __SWITCH__
+	#elif defined(__SWITCH__)
 		#define XASH_NSWITCH 1
-	#elif defined __vita__
+	#elif defined(__vita__)
 		#define XASH_PSVITA 1
 	#else
 		#error
@@ -160,7 +160,7 @@ Then you can use another oneliner to query all variables:
 		#define XASH_LITTLE_ENDIAN 1
 	#elif defined(__BIG_ENDIAN__)
 		#define XASH_BIG_ENDIAN 1
-	#elif defined __BYTE_ORDER__ && defined __ORDER_BIG_ENDIAN__ && defined __ORDER_LITTLE_ENDIAN__ // some compilers define this
+	#elif defined(__BYTE_ORDER__) && defined(__ORDER_BIG_ENDIAN__) && defined(__ORDER_LITTLE_ENDIAN__) // some compilers define this
 		#if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 			#define XASH_BIG_ENDIAN 1
 		#elif __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
@@ -181,32 +181,33 @@ Then you can use another oneliner to query all variables:
 //           CPU ARCHITECTURE DEFINES
 //
 //================================================================
-#if defined __x86_64__ || defined _M_X64
+#if defined(__x86_64__) || defined(_M_X64)
 	#define XASH_64BIT 1
 	#define XASH_AMD64 1
-#elif defined __i386__ || defined _X86_ || defined _M_IX86
+#elif defined(__i386__) || defined(_X86_) || defined(_M_IX86)
 	#define XASH_X86 1
-#elif defined __aarch64__ || defined _M_ARM64
+#elif defined(__aarch64__) || defined(_M_ARM64)
 	#define XASH_64BIT 1
 	#define XASH_ARM   8
 #elif defined(__loongarch64)
         #define XASH_64BIT 1
-#elif defined __mips__
+		#define XASH_LOONGARCH64 1
+#elif defined(__mips__)
 	#define XASH_MIPS 1
-#elif defined __EMSCRIPTEN__
+#elif defined(__EMSCRIPTEN__)
 	#define XASH_JS 1
-#elif defined __e2k__
+#elif defined(__e2k__)
 	#define XASH_64BIT 1
 	#define XASH_E2K 1
-#elif defined __PPC__ || defined __powerpc__
+#elif defined(__PPC__) || defined(__powerpc__)
 	#define XASH_PPC 1
-	#if defined __PPC64__ || defined __powerpc64__
+	#if defined(__PPC64__) || defined(__powerpc64__)
 		#define XASH_64BIT 1
 	#endif
-#elif defined _M_ARM // msvc
+#elif defined(_M_ARM) // msvc
 	#define XASH_ARM 7
 	#define XASH_ARM_HARDFP 1
-#elif defined __arm__
+#elif defined(__arm__)
 	#if __ARM_ARCH == 8 || __ARM_ARCH_8__
 		#define XASH_ARM 8
 	#elif __ARM_ARCH == 7 || __ARM_ARCH_7__
@@ -221,12 +222,12 @@ Then you can use another oneliner to query all variables:
 		#error "Unknown ARM"
 	#endif
 
-	#if defined __SOFTFP__ || __ARM_PCS_VFP == 0
+	#if defined(__SOFTFP__) || __ARM_PCS_VFP == 0
 		#define XASH_ARM_SOFTFP 1
 	#else // __SOFTFP__
 		#define XASH_ARM_HARDFP 1
 	#endif // __SOFTFP__
-#elif defined __riscv
+#elif defined(__riscv)
 	#define XASH_RISCV 1
 
 	#if __riscv_xlen == 64
@@ -235,11 +236,11 @@ Then you can use another oneliner to query all variables:
 		#error "Unknown RISC-V ABI"
 	#endif
 
-	#if defined __riscv_float_abi_soft
+	#if defined(__riscv_float_abi_soft)
 		#define XASH_RISCV_SOFTFP 1
-	#elif defined __riscv_float_abi_single
+	#elif defined(__riscv_float_abi_single)
 		#define XASH_RISCV_SINGLEFP 1
-	#elif defined __riscv_float_abi_double
+	#elif defined(__riscv_float_abi_double)
 		#define XASH_RISCV_DOUBLEFP 1
 	#else
 		#error "Unknown RISC-V float ABI"
